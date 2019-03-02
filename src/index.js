@@ -1,28 +1,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-class CodeBox extends React.Component 
+// Child
+class CodeWindow extends React.Component 
 {
     constructor(props) { 
         super(props);
         this.state = {
-            code: '',
+            code: "",
         };
 
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange = e =>
+    handleChange(e)
     {
         this.setState({ code: e.target.value });
         console.log(`AFTER: ${this.state.code}`);
+        
+        this.props.renderCode(this.state.code)
     }
 
     render() {
         return (
-        
-        <textarea placeholder="Enter code here" style={{width: '30%', height: '100%'}}
-            onChange={this.handleChange}>
+        <textarea placeholder={`Enter ${this.props.lang} here`} onChange={this.handleChange} style={{width: '30%', height: '100%'}}>
         </textarea>
     )}
 }
@@ -34,45 +35,48 @@ class Result extends React.Component
     {
         super(props);
         this.state = {
-            codeToRender: Array(3).fill(null),
+            result: 'RESULT',
         };
+
+        this.renderResult = this.renderResult.bind(this);
     }
     
-    render() {
-        return (<iframe style={{width: '90.5%', height: '100%'}}></iframe>)
-    }
-}
-
-//Container
-class ParentContainer extends React.Component 
-{
-    constructor(props)
+    renderResult(code)
     {
-        super(props);
-        this.state = {
+        // 0=HTML, 1=CSS, 2=JS
+        // if(i==0)
+        //  return (<div>{"--HTML--"}</div>);
 
-        };
+        // if(i==1)
+        //     return (<div>--CSS--</div>)
+
+        // if(i==2)
+        // return (<div>{"--JS--"}</div>)
+        // return <CodeWindow value={ this.state.codeWindows[i] }/>;
+        this.setState({result: code});
     }
 
     render() {
         return (
-        <div>
+            <div>
             <div style={{ display: 'inline'}}>
                 <div>HTML</div>
                 <div>CSS</div>
                 <div>JS</div>
             </div>
             <div style={{ height: '15vw'}}>
-                <CodeBox code="HTML"/> 
-                <CodeBox code="CSS"/>
-                <CodeBox code="JS"/>
+                <CodeWindow renderCode={this.renderResult.bind(this)} lang={"HTML"}/>
+                <CodeWindow renderCode={this.renderResult.bind(this)} lang={"CSS"}/>
+                <CodeWindow renderCode={this.renderResult.bind(this)} lang={"Javascript"}/>
             </div>
             <div style={{height: '25vw'}}>
-                <Result />
+                <textarea style={{width: '90.5%', height: '100%'}}>
+                </textarea>
             </div>    
+                { this.state.result }
         </div>
         )
     }
 }
 
-ReactDOM.render(<ParentContainer />,document.getElementById('root'));
+ReactDOM.render(<Result />,document.getElementById('root'));
