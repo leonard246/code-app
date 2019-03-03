@@ -37,7 +37,7 @@ class Result extends React.Component
     constructor(props) {
         super(props);
         this.state = {
-            HTMLCode: 'HTML', 
+            HTMLCode: '', 
             CSSCode: 'CSS',
             JSCode: 'JS',
         };
