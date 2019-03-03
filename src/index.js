@@ -72,13 +72,13 @@ class Result extends React.Component
 
     render() {
         return (
-        <div>
+        <div style={{textAlign: 'center'}}>
             <h1>Enter Code Below</h1>
             <div>
                 <CodeWindow code={this.state.HTMLCode} lang={"HTML"} renderCode={this.renderResult}/>
                 <CodeWindow code={this.state.CSSCode} lang={"CSS"} renderCode={this.renderResult}/>
                 <CodeWindow code={this.state.JSCode} lang={"JS"} renderCode={this.renderResult}/>
-                <iframe style={{width: '90vw', height: '50vh'}} srcDoc={this.generateContent()}></iframe>
+                <iframe style={{width: '91vw', height: '50vh'}} srcDoc={this.generateContent()}></iframe>
             </div>
         </div>
         )
