@@ -93,8 +93,9 @@ class FrameworkSelector extends React.Component {
     
     render() {
         return (
-            <div>Select a Framework: 
+            <div>Enable Framework: 
                 <br/>
+                <input type={"checkbox"}/>
             </div>
         );
     }
