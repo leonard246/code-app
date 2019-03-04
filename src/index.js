@@ -75,6 +75,9 @@ class Result extends React.Component
         <div style={{textAlign: 'center'}}>
             <h1>Enter Code Below</h1>
             <div>
+                <FrameworkSelector />
+            </div>
+            <div>
                 <CodeWindow code={this.state.HTMLCode} lang={"HTML"} renderCode={this.renderResult}/>
                 <CodeWindow code={this.state.CSSCode} lang={"CSS"} renderCode={this.renderResult}/>
                 <CodeWindow code={this.state.JSCode} lang={"JS"} renderCode={this.renderResult}/>
@@ -82,6 +85,18 @@ class Result extends React.Component
             </div>
         </div>
         )
+    }
+}
+
+class FrameworkSelector extends React.Component {
+    // checkbox of selections
+    
+    render() {
+        return (
+            <div>Select a Framework: 
+                <br/>
+            </div>
+        );
     }
 }
 
