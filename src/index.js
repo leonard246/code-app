@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import * as CONSTANTS from './constants'
 
 // Child
 class CodeWindow extends React.Component {
@@ -41,13 +42,14 @@ class Result extends React.Component
             CSSCode: "CSS",
             JSCode: "JS",
             Frameworks: {
-                Bootstrap: false, 
+                Bootstrap: "", 
             },
         };
 
         this.renderResult = this.renderResult.bind(this);
         this.changeFramework = this.changeFramework.bind(this);
-        this.renderFrameworks = this.renderFrameworks.bind(this);
+        this.addFramework = this.addFramework.bind(this);
+        this.removeFramework = this.removeFramework.bind(this);
     }
     
     // For passing onto CodeWindow
@@ -61,35 +63,6 @@ class Result extends React.Component
         if(lang === "JS")
             this.setState({JSCode: input});
     }
-
-    // For passing onto FrameworkSelector 
-    changeFramework(input) {
-        this.setState({
-            Frameworks: {
-                Bootstrap: input
-            }
-        });
-        console.log(this.state.Frameworks.Bootstrap);
-    }
-
-    //helper for rendering frameworks
-    renderFrameworks() {
-        const enabledFrameworks = Array(3).fill("");
-        
-        if(this.state.Frameworks.Bootstrap)
-            enabledFrameworks.push(
-    `<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>`
-            );
-
-        return (
-            this.state.enabledFrameworks.map(e => {
-                return `<script>${e}</script>`
-            })
-        );
-    }
     
     generateContent = () => {
         return `<!DOCTYPE html>
@@ -97,6 +70,7 @@ class Result extends React.Component
                 <head>
                     <style>${this.state.CSSCode}</style>
                     <script>${this.state.JSCode}</script>
+                    ${this.state.Frameworks.Bootstrap}
                 </head>
                 <body>
                     ${this.state.HTMLCode}
@@ -104,71 +78,47 @@ class Result extends React.Component
                 </html>`
     }
 
+    changeFramework(e) {
+        console.log(e.target.value);
+        console.log(e.target.checked);
+
+        e.target.checked ? this.addFramework(e.target.value) : this.removeFramework(e.target.value);
+    }
+
+    // helper for changeFramework
+    addFramework(f) {
+        console.log("add framework")
+        if(f === "BOOTSTRAP") {
+            this.setState(Object.assign(this.state.Frameworks,{Bootstrap: CONSTANTS.BOOTSTRAP}));
+        }
+        console.log(this.state.Frameworks.Bootstrap);
+    }
+    
+    // helpers for changeFramework
+    removeFramework(f) {
+        console.log("remove framework")
+        if(f === "BOOTSTRAP") {
+            this.setState(Object.assign(this.state.Frameworks,{Bootstrap: ""}));
+        }
+        console.log(this.state.Frameworks.Bootstrap);
+    }
+
     render() {
         return (
         <div style={{textAlign: 'center'}}>
             <h1>Enter Code Below</h1>
             <div>
-                <FrameworkSelector changeFW={this.changeFramework}/>
+                <input type={"checkbox"} value={"BOOTSTRAP"} onChange={this.changeFramework}/>Bootstrap             
             </div>
                 <br />
             <div>
-                <CodeWindow code={this.state.HTMLCode} lang={"HTML"} renderCode={this.renderResult}/>
-                <CodeWindow code={this.state.CSSCode} lang={"CSS"} renderCode={this.renderResult}/>
-                <CodeWindow code={this.state.JSCode} lang={"JS"} renderCode={this.renderResult}/>
+                <CodeWindow lang={"HTML"} renderCode={this.renderResult}/>
+                <CodeWindow lang={"CSS"} renderCode={this.renderResult}/>
+                <CodeWindow lang={"JS"} renderCode={this.renderResult}/>
                 <iframe title='ResultWindow' style={{width: '91vw', height: '100vh'}} srcDoc={this.generateContent()}></iframe>
             </div>
         </div>
         )
-    }
-}
-
-// Child
-class FrameworkSelector extends React.Component {
-
-    constructor(props) {
-        super(props);
-        
-        this.handleChecked = this.handleChecked.bind(this);
-    }
-    
-    // checkbox of selections
-    // UI Kit - 3.0.3
-    //     <!-- UIkit CSS -->
-    // <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/css/uikit.min.css" />
-    // <!-- UIkit JS -->
-    // <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit.min.js"></script>
-    // <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit-icons.min.js"></script>
-    
-    // Pure.css
-    // <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
-    
-    // Materialise 1.0.0
-    // <!-- Compiled and minified CSS -->
-    // <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    
-    // <!-- Compiled and minified JavaScript -->
-    // <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    
-    // Skeleton 2.0.4
-    // https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css
-    // https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css 
-    
-    handleChecked(e) {
-        this.props.changeFW(e.target.checked);
-    }
-
-    render() {
-            return (
-                <div style={{color: 'midnightblue'}}>Enable CSS Framework: 
-                    <br/>
-                    <input type={"checkbox"} value={"BOOTSTRAP"} onClick={this.handleChecked}/>Bootstrap 
-                    {/* <input type={"checkbox"} value={"UIKit"}/>UI Kit  */}
-                    {/* <input type={"checkbox"} value={"PureCSS"}/>Pure.css  */}
-                    {/* <input type={"checkbox"} value={"Materialize"}/>Materialize */}
-                    {/* <input type={"checkbox"} value={"Skeleton"}/>Skeleton */}
-                </div>
-            );
     }
 }
 
