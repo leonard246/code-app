@@ -38,7 +38,7 @@ class Result extends React.Component
     constructor(props) {
         super(props);
         this.state = {
-            HTMLCode: "", // Nothing to show in HTML box
+            HTMLCode: "", // Show nothing in HTML box
             CSSCode: "CSS",
             JSCode: "JS",
             Frameworks: {
@@ -64,6 +64,24 @@ class Result extends React.Component
             this.setState({JSCode: input});
     }
     
+    changeFramework(e) {
+        e.target.checked ? this.addFramework(e.target.value) : this.removeFramework(e.target.value);
+    }
+
+    // helper for changeFramework
+    addFramework(fw) {
+        if(fw === "BOOTSTRAP") {
+            this.setState(Object.assign(this.state.Frameworks,{Bootstrap: CONSTANTS.BOOTSTRAP}));
+        }
+    }
+    
+    // helper for changeFramework
+    removeFramework(fw) {
+        if(fw === "BOOTSTRAP") {
+            this.setState(Object.assign(this.state.Frameworks,{Bootstrap: ""}));
+        }
+    }
+
     generateContent = () => {
         return `<!DOCTYPE html>
                 <html>
@@ -77,32 +95,7 @@ class Result extends React.Component
                 </body>
                 </html>`
     }
-
-    changeFramework(e) {
-        console.log(e.target.value);
-        console.log(e.target.checked);
-
-        e.target.checked ? this.addFramework(e.target.value) : this.removeFramework(e.target.value);
-    }
-
-    // helper for changeFramework
-    addFramework(f) {
-        console.log("add framework")
-        if(f === "BOOTSTRAP") {
-            this.setState(Object.assign(this.state.Frameworks,{Bootstrap: CONSTANTS.BOOTSTRAP}));
-        }
-        console.log(this.state.Frameworks.Bootstrap);
-    }
     
-    // helpers for changeFramework
-    removeFramework(f) {
-        console.log("remove framework")
-        if(f === "BOOTSTRAP") {
-            this.setState(Object.assign(this.state.Frameworks,{Bootstrap: ""}));
-        }
-        console.log(this.state.Frameworks.Bootstrap);
-    }
-
     render() {
         return (
         <div style={{textAlign: 'center'}}>
