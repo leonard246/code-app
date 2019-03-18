@@ -15,11 +15,8 @@ class CodeWindow extends React.Component {
         this.props.renderCode(e.target.value, this.props.lang);
     }
 
-    getPlaceholder = () => {
-        if(this.props.lang === "")
-            return "HTML";
-        else
-            return this.props.lang;
+    getPlaceholder() {
+        return this.props.lang === "" ?  "HTML" : this.props.lang;
     }
 
     render() {
@@ -52,7 +49,6 @@ class Result extends React.Component
 
         this.renderResult = this.renderResult.bind(this);
         this.changeFramework = this.changeFramework.bind(this);
-        this.modifyramework = this.modifyFramework.bind(this);
     }
     
     // For passing onto CodeWindow
@@ -60,52 +56,45 @@ class Result extends React.Component
         if(lang === "HTML")
             this.setState({HTMLCode: input});
 
-        if(lang === "CSS")
+        else if(lang === "CSS")
             this.setState({CSSCode: input});
 
-        if(lang === "JS")
+        else if(lang === "JS")
             this.setState({JSCode: input});
     }
     
     changeFramework(e) {
-        e.target.checked ? this.modifyFramework("ADD", e.target.value) : this.modifyFramework("REMOVE", e.target.value);
-    }
-
-    // helper for changeFramework
-    modifyFramework(action, fw) {        
-        if(fw === "BOOTSTRAP") {
-            action === "ADD" ? this.setState(Object.assign(this.state.Frameworks,{Bootstrap: CONSTANTS.BOOTSTRAP})) : 
-            this.setState(Object.assign(this.state.Frameworks,{Bootstrap: ""}));
-        }
-
-        if(fw === "UIKIT") {
-            action === "ADD" ? this.setState(Object.assign(this.state.Frameworks,{UiKit: CONSTANTS.UIKIT})) : 
-            this.setState(Object.assign(this.state.Frameworks,{UiKit: ""}));
-        }
-
-        if(fw === "PURE") {
-            action === "ADD" ? this.setState(Object.assign(this.state.Frameworks,{Pure: CONSTANTS.PURE})) : 
-            this.setState(Object.assign(this.state.Frameworks,{Pure: ""}));
-        }
-
-        if(fw === "MATERIALIZE") {
-            action === "ADD" ? this.setState(Object.assign(this.state.Frameworks,{Materialize: CONSTANTS.MATERIALIZE})) : 
-            this.setState(Object.assign(this.state.Frameworks,{Materialize: ""}));
-        }
-
-        if(fw === "SKELETON") {
-            action === "ADD" ? this.setState(Object.assign(this.state.Frameworks,{Skeleton: CONSTANTS.SKELETON})) : 
-            this.setState(Object.assign(this.state.Frameworks,{Skeleton: ""}));
+        // Deactivate all frameworks
+        this.setState(Object.assign(this.state.Frameworks,{Bootstrap: ""},{UiKit: ""},{Pure: ""},{Materialize: ""},{Skeleton: ""}));
+        
+        // Activate the relevant framework
+        switch(e.target.value) {
+            case "BOOTSTRAP":
+                this.setState(Object.assign(this.state.Frameworks,{Bootstrap: CONSTANTS.BOOTSTRAP})); break;
+            case "UIKIT":
+                this.setState(Object.assign(this.state.Frameworks,{UiKit: CONSTANTS.UIKIT})); break;
+            case "PURE":
+                this.setState(Object.assign(this.state.Frameworks,{Pure: CONSTANTS.PURE})); break;
+            case "MATERIALIZE":
+                this.setState(Object.assign(this.state.Frameworks,{Materialize: CONSTANTS.MATERIALIZE})); break;
+            case "SKELETON":
+                this.setState(Object.assign(this.state.Frameworks,{Skeleton: CONSTANTS.SKELETON})); break;
+            default:
+                // do nothing
         }
     }
 
-    generateContent = () => {
+    generateContent() {
         return `<!DOCTYPE html>
                 <html>
                 <head>
                     <style>${this.state.CSSCode}</style>
                     <script>${this.state.JSCode}</script>
                     ${this.state.Frameworks.Bootstrap}
+                    ${this.state.Frameworks.UiKit}
+                    ${this.state.Frameworks.Pure}
+                    ${this.state.Frameworks.Materialize}
+                    ${this.state.Frameworks.Skeleton}
                 </head>
                 <body>
                     ${this.state.HTMLCode}
@@ -118,12 +107,15 @@ class Result extends React.Component
         <div style={{textAlign: 'center'}}>
             <h1>Enter Code Below</h1>
             <div>
-                <input type={"checkbox"} value={"BOOTSTRAP"} onChange={this.changeFramework}/>Bootstrap
-                {/* <input type={"checkbox"} value={"UIKIT"} onChange={this.changeFramework}/>UiKit             
-                <input type={"checkbox"} value={"PURE"} onChange={this.changeFramework}/>Pure             
-                <input type={"checkbox"} value={"MATERIALIZE"} onChange={this.changeFramework}/>Materialize             
-                <input type={"checkbox"} value={"SKELETON"} onChange={this.changeFramework}/>Skeleton              */}
-
+                <form>
+                    <h3 style={{color: "blue"}}>Select a Framework:</h3> 
+                    <input type={"radio"} name={"fw"} value={"BOOTSTRAP"} onChange={this.changeFramework}/>Bootstrap
+                    <input type={"radio"} name={"fw"} value={"UIKIT"} onChange={this.changeFramework}/>UiKit             
+                    <input type={"radio"} name={"fw"} value={"PURE"} onChange={this.changeFramework}/>Pure             
+                    <input type={"radio"} name={"fw"} value={"MATERIALIZE"} onChange={this.changeFramework}/>Materialize             
+                    <input type={"radio"} name={"fw"} value={"SKELETON"} onChange={this.changeFramework}/>Skeleton
+                    <input type={"radio"} name={"fw"} value={"NONE"} onChange={this.changeFramework}/>None
+                </form>
             </div>
                 <br />
             <div>
