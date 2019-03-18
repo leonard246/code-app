@@ -43,13 +43,16 @@ class Result extends React.Component
             JSCode: "JS",
             Frameworks: {
                 Bootstrap: "", 
+                UiKit: "",
+                Pure: "",
+                Materialize: "",
+                Skeleton: "",
             },
         };
 
         this.renderResult = this.renderResult.bind(this);
         this.changeFramework = this.changeFramework.bind(this);
-        this.addFramework = this.addFramework.bind(this);
-        this.removeFramework = this.removeFramework.bind(this);
+        this.modifyramework = this.modifyFramework.bind(this);
     }
     
     // For passing onto CodeWindow
@@ -65,20 +68,34 @@ class Result extends React.Component
     }
     
     changeFramework(e) {
-        e.target.checked ? this.addFramework(e.target.value) : this.removeFramework(e.target.value);
+        e.target.checked ? this.modifyFramework("ADD", e.target.value) : this.modifyFramework("REMOVE", e.target.value);
     }
 
     // helper for changeFramework
-    addFramework(fw) {
+    modifyFramework(action, fw) {        
         if(fw === "BOOTSTRAP") {
-            this.setState(Object.assign(this.state.Frameworks,{Bootstrap: CONSTANTS.BOOTSTRAP}));
-        }
-    }
-    
-    // helper for changeFramework
-    removeFramework(fw) {
-        if(fw === "BOOTSTRAP") {
+            action === "ADD" ? this.setState(Object.assign(this.state.Frameworks,{Bootstrap: CONSTANTS.BOOTSTRAP})) : 
             this.setState(Object.assign(this.state.Frameworks,{Bootstrap: ""}));
+        }
+
+        if(fw === "UIKIT") {
+            action === "ADD" ? this.setState(Object.assign(this.state.Frameworks,{UiKit: CONSTANTS.UIKIT})) : 
+            this.setState(Object.assign(this.state.Frameworks,{UiKit: ""}));
+        }
+
+        if(fw === "PURE") {
+            action === "ADD" ? this.setState(Object.assign(this.state.Frameworks,{Pure: CONSTANTS.PURE})) : 
+            this.setState(Object.assign(this.state.Frameworks,{Pure: ""}));
+        }
+
+        if(fw === "MATERIALIZE") {
+            action === "ADD" ? this.setState(Object.assign(this.state.Frameworks,{Materialize: CONSTANTS.MATERIALIZE})) : 
+            this.setState(Object.assign(this.state.Frameworks,{Materialize: ""}));
+        }
+
+        if(fw === "SKELETON") {
+            action === "ADD" ? this.setState(Object.assign(this.state.Frameworks,{Skeleton: CONSTANTS.SKELETON})) : 
+            this.setState(Object.assign(this.state.Frameworks,{Skeleton: ""}));
         }
     }
 
@@ -101,7 +118,12 @@ class Result extends React.Component
         <div style={{textAlign: 'center'}}>
             <h1>Enter Code Below</h1>
             <div>
-                <input type={"checkbox"} value={"BOOTSTRAP"} onChange={this.changeFramework}/>Bootstrap             
+                <input type={"checkbox"} value={"BOOTSTRAP"} onChange={this.changeFramework}/>Bootstrap
+                {/* <input type={"checkbox"} value={"UIKIT"} onChange={this.changeFramework}/>UiKit             
+                <input type={"checkbox"} value={"PURE"} onChange={this.changeFramework}/>Pure             
+                <input type={"checkbox"} value={"MATERIALIZE"} onChange={this.changeFramework}/>Materialize             
+                <input type={"checkbox"} value={"SKELETON"} onChange={this.changeFramework}/>Skeleton              */}
+
             </div>
                 <br />
             <div>
