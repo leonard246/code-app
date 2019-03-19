@@ -24,6 +24,6 @@ export const MATERIALIZE =
     
 // SKELETON 2.0.4
 export const SKELETON =
-`https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css
-https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css`;
+`<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">`;
 
