@@ -38,11 +38,10 @@ class Custom extends React.Component {
     render() {
         return (
             <div>
-                {/* <input style={{textAlign: "center"}} placeholder="Insert CDN link"></input> */}
                 <textarea
-                    placeholder={"Insert CDN link"}
+                    placeholder={"Insert CDN links here"}
 
-                    style={{width: `60vw`, height: '15vw'}} />
+                    style={{width: `60vw`, height: '10vw'}} />
             </div>
         );
     }
