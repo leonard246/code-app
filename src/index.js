@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as CONSTANTS from './constants'
+import './styles.css'
 
 // Child
 class CodeWindow extends React.Component {
@@ -24,7 +25,7 @@ class CodeWindow extends React.Component {
             <textarea
                 placeholder={`Enter ${this.getPlaceholder()} code here`}
                 onChange={this.handleChange}
-                style={{width: `30vw`, height: '15vw'}} />
+                className="codeFont codeWindow" />
         );
     }
 }
@@ -41,7 +42,7 @@ class Custom extends React.Component {
                 <textarea
                     placeholder={"Insert CDN links here"}
 
-                    style={{width: `60vw`, height: '10vw'}} />
+                    className="cdnWindow" />
             </div>
         );
     }
@@ -141,11 +142,11 @@ class Result extends React.Component
     render() {
         return (
         <div style={{textAlign: 'center'}}>
-            <h1>Enter Code Below</h1>
+            <h1 className="headingFont">Enter Code Below</h1>
             <div>
                 <form>
-                    <h3 style={{color: "blue"}}>Select a Framework:</h3> 
-                    <input type={"radio"} name={"fw"} value={"BOOTSTRAP"} onChange={this.changeFramework}/>Bootstrap
+                    <h3 className="bodyFont" style={{color: "cornflowerblue"}}>Select a Framework:</h3> 
+                    <input type={"radio"} className="headingFont" name={"fw"} value={"BOOTSTRAP"} onChange={this.changeFramework}/>Bootstrap
                     <input type={"radio"} name={"fw"} value={"UIKIT"} onChange={this.changeFramework}/>UiKit             
                     <input type={"radio"} name={"fw"} value={"PURE"} onChange={this.changeFramework}/>Pure             
                     <input type={"radio"} name={"fw"} value={"MATERIALIZE"} onChange={this.changeFramework}/>Materialize             
@@ -160,7 +161,7 @@ class Result extends React.Component
                 <CodeWindow lang={"HTML"} renderCode={this.renderResult}/>
                 <CodeWindow lang={"CSS"} renderCode={this.renderResult}/>
                 <CodeWindow lang={"JS"} renderCode={this.renderResult}/>
-                <iframe title='ResultWindow' style={{width: '91vw', height: '100vh'}} srcDoc={this.generateContent()}></iframe>
+                <iframe title='ResultWindow' className="resultWindow" srcDoc={this.generateContent()}></iframe>
             </div>
         </div>
         )

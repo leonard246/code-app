@@ -1,5 +1,24 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Source+Code+Pro');
 
-.primaryFont {
+.headingFont {
     font-family: "Montserrat", Helvetica, sans-serif, Arial;
+}
+.bodyFont {
+    font-family: Helvetica, sans-serif, Arial;
+}
+.codeFont {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1vw;
+}
+.codeWindow {
+    width: 30vw; 
+    height: 15vw;
+}
+.cdnWindow {
+    width: 60vw; 
+    height: 10vw;
+}
+.resultWindow{
+    width: 91vw; 
+    height: 100vh;
 }
