@@ -22,9 +22,28 @@ class CodeWindow extends React.Component {
     render() {
         return ( 
             <textarea
-                    placeholder={`Enter ${this.getPlaceholder()} code here`}
-                    onChange={this.handleChange}
-                    style={{width: `30vw`, height: '15vw'}} />
+                placeholder={`Enter ${this.getPlaceholder()} code here`}
+                onChange={this.handleChange}
+                style={{width: `30vw`, height: '15vw'}} />
+        );
+    }
+}
+
+// Child
+class Custom extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div>
+                {/* <input style={{textAlign: "center"}} placeholder="Insert CDN link"></input> */}
+                <textarea
+                    placeholder={"Insert CDN link"}
+
+                    style={{width: `60vw`, height: '15vw'}} />
+            </div>
         );
     }
 }
@@ -44,6 +63,7 @@ class Result extends React.Component
                 Pure: "",
                 Materialize: "",
                 Skeleton: "",
+                Custom: "",
             },
         };
 
@@ -62,10 +82,15 @@ class Result extends React.Component
         else if(lang === "JS")
             this.setState({JSCode: input});
     }
-    
+
+    // pass custom URLs
+    passURL() {
+
+    }
+
     changeFramework(e) {
         // Deactivate all frameworks
-        this.setState(Object.assign(this.state.Frameworks,{Bootstrap: ""},{UiKit: ""},{Pure: ""},{Materialize: ""},{Skeleton: ""}));
+        this.setState(Object.assign(this.state.Frameworks,{Bootstrap: ""},{UiKit: ""},{Pure: ""},{Materialize: ""},{Skeleton: ""}, {Custom: ""}));
         
         // Activate the relevant framework
         switch(e.target.value) {
@@ -79,8 +104,9 @@ class Result extends React.Component
                 this.setState(Object.assign(this.state.Frameworks,{Materialize: CONSTANTS.MATERIALIZE})); break;
             case "SKELETON":
                 this.setState(Object.assign(this.state.Frameworks,{Skeleton: CONSTANTS.SKELETON})); break;
-            default:
-                // do nothing
+            case "CUSTOM":
+                this.displayCustom("CUSTOM");    
+            default: // do nothing
         }
     }
 
@@ -102,6 +128,17 @@ class Result extends React.Component
                 </html>`
     }
     
+    displayCustom(content) {
+        console.log(this.state.Frameworks.Custom);
+        if(content === "CUSTOM") {
+            this.setState(Object.assign(this.state.Frameworks,{Custom: "CUSTOM"}));
+            //write custom content
+            return true;
+        }
+
+        return false;
+    }
+
     render() {
         return (
         <div style={{textAlign: 'center'}}>
@@ -114,10 +151,12 @@ class Result extends React.Component
                     <input type={"radio"} name={"fw"} value={"PURE"} onChange={this.changeFramework}/>Pure             
                     <input type={"radio"} name={"fw"} value={"MATERIALIZE"} onChange={this.changeFramework}/>Materialize             
                     <input type={"radio"} name={"fw"} value={"SKELETON"} onChange={this.changeFramework}/>Skeleton
+                    <br />
                     <input type={"radio"} name={"fw"} value={"NONE"} onChange={this.changeFramework}/>None
+                    <input type={"radio"} name={"fw"} value={"CUSTOM"} onChange={this.changeFramework}/>Custom
                 </form>
+                    { this.state.Frameworks.Custom === "CUSTOM" ? <Custom /> : <br /> }
             </div>
-                <br />
             <div>
                 <CodeWindow lang={"HTML"} renderCode={this.renderResult}/>
                 <CodeWindow lang={"CSS"} renderCode={this.renderResult}/>
