@@ -34,6 +34,12 @@ class CodeWindow extends React.Component {
 class Custom extends React.Component {
     constructor(props) {
         super(props);
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+        this.props.customCode(e.target.value);
     }
 
     render() {
@@ -41,7 +47,7 @@ class Custom extends React.Component {
             <div>
                 <textarea
                     placeholder={"Insert CDN links here"}
-
+                    onChange={this.handleChange}
                     className="cdnWindow" />
             </div>
         );
@@ -63,12 +69,15 @@ class Result extends React.Component
                 Pure: "",
                 Materialize: "",
                 Skeleton: "",
+                showCustom: false,
                 Custom: "",
             },
         };
 
         this.renderResult = this.renderResult.bind(this);
         this.changeFramework = this.changeFramework.bind(this);
+        this.displayCustom = this.displayCustom.bind(this);
+        this.renderCustomCode = this.renderCustomCode.bind(this);
     }
     
     // For passing onto CodeWindow
@@ -91,23 +100,28 @@ class Result extends React.Component
     changeFramework(e) {
         // Deactivate all frameworks
         this.setState(Object.assign(this.state.Frameworks,{Bootstrap: ""},{UiKit: ""},{Pure: ""},{Materialize: ""},{Skeleton: ""}, {Custom: ""}));
-        
+        this.setShowCustom(false);
         // Activate the relevant framework
         switch(e.target.value) {
-            case "BOOTSTRAP":
+            case "BOOTSTRAP": 
                 this.setState(Object.assign(this.state.Frameworks,{Bootstrap: CONSTANTS.BOOTSTRAP})); break;
-            case "UIKIT":
+            case "UIKIT": 
                 this.setState(Object.assign(this.state.Frameworks,{UiKit: CONSTANTS.UIKIT})); break;
             case "PURE":
                 this.setState(Object.assign(this.state.Frameworks,{Pure: CONSTANTS.PURE})); break;
             case "MATERIALIZE":
-                this.setState(Object.assign(this.state.Frameworks,{Materialize: CONSTANTS.MATERIALIZE})); break;
+                this.setState(Object.assign(this.state.Frameworks,{Materialize: CONSTANTS.MATERIALIZE})); break; 
             case "SKELETON":
                 this.setState(Object.assign(this.state.Frameworks,{Skeleton: CONSTANTS.SKELETON})); break;
-            case "CUSTOM":
-                this.displayCustom("CUSTOM");    
+            case "CUSTOM": {
+                this.setShowCustom(true); break;
+            }
             default: // do nothing
         }
+    }
+
+    setShowCustom(booleanValue) {
+        this.setState(Object.assign(this.state.Frameworks,{showCustom: booleanValue}));          
     }
 
     generateContent() {
@@ -121,22 +135,16 @@ class Result extends React.Component
                     ${this.state.Frameworks.Pure}
                     ${this.state.Frameworks.Materialize}
                     ${this.state.Frameworks.Skeleton}
+    
                 </head>
                 <body>
                     ${this.state.HTMLCode}
                 </body>
                 </html>`
     }
-    
-    displayCustom(content) {
-        console.log(this.state.Frameworks.Custom);
-        if(content === "CUSTOM") {
-            this.setState(Object.assign(this.state.Frameworks,{Custom: "CUSTOM"}));
-            //write custom content
-            return true;
-        }
 
-        return false;
+    renderCustomCode(input) {
+        this.setState(Object.assign(this.state.Frameworks,{Custom: input})); 
     }
 
     render() {
@@ -145,7 +153,7 @@ class Result extends React.Component
             <h1 className="headingFont">Enter Code Below</h1>
             <div>
                 <form>
-                    <h3 className="bodyFont" style={{color: "cornflowerblue"}}>Select a Framework:</h3> 
+                    <h3 className="bodyFont" style={{color: "royalblue"}}>Select a Framework:</h3> 
                     <input type={"radio"} className="headingFont" name={"fw"} value={"BOOTSTRAP"} onChange={this.changeFramework}/>Bootstrap
                     <input type={"radio"} name={"fw"} value={"UIKIT"} onChange={this.changeFramework}/>UiKit             
                     <input type={"radio"} name={"fw"} value={"PURE"} onChange={this.changeFramework}/>Pure             
@@ -155,7 +163,7 @@ class Result extends React.Component
                     <input type={"radio"} name={"fw"} value={"NONE"} onChange={this.changeFramework}/>None
                     <input type={"radio"} name={"fw"} value={"CUSTOM"} onChange={this.changeFramework}/>Custom
                 </form>
-                    { this.state.Frameworks.Custom === "CUSTOM" ? <Custom /> : <br /> }
+                    { this.state.Frameworks.showCustom ? <Custom customCode={this.renderCustomCode}/> : <br /> }
             </div>
             <div>
                 <CodeWindow lang={"HTML"} renderCode={this.renderResult}/>
