@@ -76,7 +76,6 @@ class Result extends React.Component
 
         this.renderResult = this.renderResult.bind(this);
         this.changeFramework = this.changeFramework.bind(this);
-        this.displayCustom = this.displayCustom.bind(this);
         this.renderCustomCode = this.renderCustomCode.bind(this);
     }
     
@@ -90,11 +89,6 @@ class Result extends React.Component
 
         else if(lang === "JS")
             this.setState({JSCode: input});
-    }
-
-    // pass custom URLs
-    passURL() {
-
     }
 
     changeFramework(e) {
