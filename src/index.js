@@ -46,7 +46,7 @@ class Custom extends React.Component {
         return (
             <div>
                 <textarea
-                    placeholder={"Insert CDN links here"}
+                    placeholder={"Insert CDN URLs here"}
                     onChange={this.handleChange}
                     className="cdnWindow" />
             </div>
@@ -129,7 +129,7 @@ class Result extends React.Component
                     ${this.state.Frameworks.Pure}
                     ${this.state.Frameworks.Materialize}
                     ${this.state.Frameworks.Skeleton}
-    
+                    <script>${this.state.Frameworks.Custom}</script>    
                 </head>
                 <body>
                     ${this.state.HTMLCode}
