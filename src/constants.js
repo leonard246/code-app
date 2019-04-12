@@ -9,7 +9,7 @@ export const BOOTSTRAP =
 
 // UI KIT 3.0.3
 export const UIKIT =
-`<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/css/uikit.min.css" />
+`<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/css/uikit.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit-icons.min.js"></script>`;
     
@@ -24,6 +24,6 @@ export const MATERIALIZE =
     
 // SKELETON 2.0.4
 export const SKELETON =
-`https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css
-https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css`;
+`<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">`;
 
