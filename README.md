@@ -1,3 +1,29 @@
+Codepit
+A basic react app to help you view and test different CSS frameworks, HTML and Javascript. 
+
+Getting Started
+Project has been deployed on https://codepit.tk/
+
+Prerequisites
+No install or prerequisites required as this is wholly a front end project ready to run within the browser. 
+
+Built With
+HTML
+CSS 
+Javascript / React
+
+Contributing
+Pull and build upon this as a standard React app
+
+
+Authors
+Leonard Koh
+
+License
+This project is licensed under the MIT License
+
+
+Instructions for React
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
